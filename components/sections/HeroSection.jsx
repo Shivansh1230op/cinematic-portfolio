@@ -54,6 +54,19 @@ const HeroSection = forwardRef(function HeroSection(props, ref) {
     }
   }, [])
 
+  const nameStyle = {
+    fontFamily: 'var(--font-baloo), sans-serif',
+    fontSize: 'var(--hero-name-size)',
+    fontWeight: 800,
+    color: '#1E1E1E',
+    lineHeight: 0.9,
+    letterSpacing: '-0.02em',
+    position: 'absolute',
+    left: '1.5rem',
+    zIndex: 0,
+    whiteSpace: 'nowrap',
+  }
+
   return (
     <section
       ref={node => {
@@ -71,7 +84,7 @@ const HeroSection = forwardRef(function HeroSection(props, ref) {
     >
       <Navbar />
 
-      {/* Photo — absolute right, full height, bleeds to edge */}
+      {/* Photo — right side, sits above text names */}
       <div
         ref={photoRef}
         style={{
@@ -79,7 +92,8 @@ const HeroSection = forwardRef(function HeroSection(props, ref) {
           right: 0,
           top: 0,
           height: '100%',
-          width: '62%',
+          width: '55%',
+          zIndex: 1,
         }}
       >
         <Image
@@ -91,26 +105,23 @@ const HeroSection = forwardRef(function HeroSection(props, ref) {
         />
       </div>
 
-      {/* Text content — absolutely positioned, matches reference */}
+      {/* Greeting — top left, below navbar */}
       <div
         style={{
           position: 'absolute',
-          left: '2.5rem',
-          bottom: '8rem',
-          zIndex: 1,
-          width: '44%',
-          display: 'flex',
-          flexDirection: 'column',
+          top: '7rem',
+          left: '1.5rem',
+          zIndex: 2,
         }}
       >
         <p
           ref={greetRef}
           style={{
             fontFamily: 'var(--font-baloo), sans-serif',
-            fontSize: '1rem',
+            fontSize: '0.9rem',
             fontWeight: 400,
             color: '#1E1E1E',
-            marginBottom: 0,
+            lineHeight: 1.3,
             letterSpacing: '0.01em',
           }}
         >
@@ -120,77 +131,60 @@ const HeroSection = forwardRef(function HeroSection(props, ref) {
           ref={roleRef}
           style={{
             fontFamily: 'var(--font-baloo), sans-serif',
-            fontSize: '1rem',
+            fontSize: '0.9rem',
             fontWeight: 600,
             color: '#1E1E1E',
-            marginBottom: '0.5rem',
+            lineHeight: 1.3,
             letterSpacing: '0.01em',
           }}
         >
           Software Developer
         </p>
+      </div>
 
+      {/* First name — large, positioned upper half */}
+      <p ref={firstName} style={{ ...nameStyle, top: '32vh' }}>
+        Vaibhav
+      </p>
+
+      {/* Location — between names, center-right of viewport */}
+      <div
+        ref={locationRef}
+        style={{
+          position: 'absolute',
+          top: '60vh',
+          left: '42%',
+          zIndex: 2,
+        }}
+      >
         <p
-          ref={firstName}
           style={{
-            fontFamily: 'var(--font-baloo), sans-serif',
-            fontSize: 'var(--hero-name-size)',
-            fontWeight: 800,
+            fontSize: '0.75rem',
+            fontWeight: 600,
             color: '#1E1E1E',
-            lineHeight: 0.95,
-            letterSpacing: '-0.02em',
+            letterSpacing: '0.05em',
+            lineHeight: 1.5,
           }}
         >
-          Vaibhav
+          Based on India*
         </p>
-
-        {/* Location — between first and last name */}
-        <div
-          ref={locationRef}
-          style={{
-            paddingLeft: '0.25rem',
-            paddingTop: '0.5rem',
-            paddingBottom: '0.5rem',
-          }}
-        >
-          <p
-            style={{
-              fontSize: '0.7rem',
-              fontWeight: 600,
-              color: '#1E1E1E',
-              letterSpacing: '0.05em',
-              lineHeight: 1.4,
-            }}
-          >
-            Based on India*
-          </p>
-          <p
-            style={{
-              fontSize: '0.7rem',
-              fontWeight: 600,
-              color: '#1E1E1E',
-              letterSpacing: '0.05em',
-              lineHeight: 1.4,
-            }}
-          >
-            Available worldwide
-          </p>
-        </div>
-
         <p
-          ref={lastName}
           style={{
-            fontFamily: 'var(--font-baloo), sans-serif',
-            fontSize: 'var(--hero-name-size)',
-            fontWeight: 800,
+            fontSize: '0.75rem',
+            fontWeight: 600,
             color: '#1E1E1E',
-            lineHeight: 0.95,
-            letterSpacing: '-0.02em',
+            letterSpacing: '0.05em',
+            lineHeight: 1.5,
           }}
         >
-          Khushalani
+          Available worldwide
         </p>
       </div>
+
+      {/* Last name — large, positioned lower half, bleeds bottom */}
+      <p ref={lastName} style={{ ...nameStyle, top: '60vh' }}>
+        Khushalani
+      </p>
     </section>
   )
 })

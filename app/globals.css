@@ -27,7 +27,7 @@
   --email-btn-text: #1a0800;
 
   /* Type scale */
-  --hero-name-size: clamp(4rem, 11.9vw, 11.25rem);
+  --hero-name-size: clamp(5rem, 16vw, 15rem);
   --hero-role-size: clamp(0.75rem, 1.2vw, 0.875rem);
 
   /* ─── shadcn var bridge (maps to brand tokens) ── */
