@@ -137,6 +137,8 @@
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
+  min-width: 0;
+  overflow: hidden;
 }
 
 .meta {
@@ -180,6 +182,8 @@
   line-height: 0.93;
   margin: 0;
   text-transform: uppercase;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 
 .role {
