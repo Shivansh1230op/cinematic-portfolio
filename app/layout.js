@@ -25,8 +25,64 @@ const dancing = Dancing_Script({
 });
 
 export const metadata = {
-  title: 'Vaibhav Khushalani — Software Developer',
-  description: 'Portfolio of Vaibhav Khushalani, Software Developer based in India, available worldwide.',
+  metadataBase: new URL('https://vaibhavkhushalani.dev'),
+  title: {
+    default: 'Vaibhav Khushalani — Full Stack Developer',
+    template: '%s | Vaibhav Khushalani',
+  },
+  description:
+    'Full Stack Engineer with 4+ years building scalable web and AI-powered systems using MERN, Next.js, and Python. Available worldwide for collaborations.',
+  keywords: [
+    'Vaibhav Khushalani',
+    'Full Stack Developer',
+    'Software Engineer',
+    'MERN Stack',
+    'Next.js Developer',
+    'React Developer',
+    'Node.js',
+    'AI Systems',
+    'Portfolio',
+    'India',
+  ],
+  authors: [{ name: 'Vaibhav Khushalani', url: 'https://vaibhavkhushalani.dev' }],
+  creator: 'Vaibhav Khushalani',
+  openGraph: {
+    type: 'website',
+    locale: 'en_IN',
+    url: 'https://vaibhavkhushalani.dev',
+    siteName: 'Vaibhav Khushalani',
+    title: 'Vaibhav Khushalani — Full Stack Developer',
+    description:
+      'Full Stack Engineer with 4+ years building scalable web and AI-powered systems using MERN, Next.js, and Python. Available worldwide for collaborations.',
+    images: [
+      {
+        url: '/assets/hero.png',
+        width: 1200,
+        height: 630,
+        alt: 'Vaibhav Khushalani — Full Stack Developer Portfolio',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Vaibhav Khushalani — Full Stack Developer',
+    description:
+      'Full Stack Engineer with 4+ years building scalable web and AI-powered systems using MERN, Next.js, and Python. Available worldwide for collaborations.',
+    images: ['/assets/hero.png'],
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  alternates: {
+    canonical: 'https://vaibhavkhushalani.dev',
+  },
 };
 
 export default function RootLayout({ children }) {
@@ -36,6 +92,26 @@ export default function RootLayout({ children }) {
       className={`${geistSans.variable} ${geistMono.variable} ${baloo.variable} ${dancing.variable} h-full antialiased`}
     >
       <body suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable} ${baloo.variable} ${dancing.variable} h-full antialiased`}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Person',
+              name: 'Vaibhav Khushalani',
+              url: 'https://vaibhavkhushalani.dev',
+              email: 'vaibhavkhush124@gmail.com',
+              jobTitle: 'Full Stack Developer',
+              sameAs: [
+                'https://github.com/VaibhavKhushalani',
+                'https://www.linkedin.com/in/vaibhav-khushalani-760217136',
+                'https://medium.com/@vaibhavkhushalani',
+                'https://www.instagram.com/vaibhav.create',
+                'https://www.youtube.com/@vaibhav.create',
+              ],
+            }),
+          }}
+        />
         <Cursor />
         {children}
       </body>
