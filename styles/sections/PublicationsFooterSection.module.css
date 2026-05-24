@@ -1,4 +1,4 @@
-/* ── Outer wrapper (200vh — two scroll steps) ─────────── */
+/* ── Outer wrapper (300vh — three scroll steps) ───────── */
 .wrapper {
   height: 300vh;
   position: relative;
@@ -7,7 +7,7 @@
 
 @supports (height: 100svh) {
   @media (max-width: 767px) {
-    .wrapper { height: 200svh; }
+    .wrapper { height: 300svh; }
   }
 }
 
@@ -55,25 +55,34 @@
   display: none;
 }
 
-/* ── Mobile video (simple bg — no WebGL) ─────────────── */
-.mobileVideo {
+/* ── Mobile background image (footer phase — mobile only) ── */
+.mobileFooterBg {
+  display: none;
+}
+.mobileDarkOverlay {
   display: none;
 }
 @media (max-width: 767px) {
-  .mobileVideo {
+  .mobileFooterBg {
     display: block;
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
     z-index: 1;
-    opacity: 0;
     pointer-events: none;
-    filter: brightness(0.50);
-    will-change: opacity;
-    transform: translateY(45%);
+  }
+  .mobileFooterBgImg {
+    object-fit: cover;
+    object-position: center top;
+    filter: brightness(0.65);
+  }
+  /* permanent overlay — never animated, keeps image visually identical in all 3 sections */
+  .mobileDarkOverlay {
+    display: block;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: rgba(0, 0, 0, 0.48);
+    pointer-events: none;
   }
 }
 
@@ -594,6 +603,9 @@
   to   { transform: rotate(360deg); }
 }
 
+/* ── Mobile hero layout (hidden on desktop) ──────────── */
+.mobileLayout { display: none; }
+
 /* ── Image-only interstitial (step 2) ────────────────── */
 .interstitial {
   position: absolute;
@@ -721,8 +733,11 @@
 
 /* ── Mobile ───────────────────────────────────────────── */
 @media (max-width: 767px) {
-  .glCanvas { display: none; }
+  .glCanvas  { display: none; }
+  .imageWrap { display: none; }
   .sticky { height: 100svh; min-height: -webkit-fill-available; }
+
+  /* pubContent has no background — mobileDarkOverlay provides uniform darkness beneath all sections */
 
   /* Publications */
   .pubHero { padding: 3.2rem 1.25rem 0; }
@@ -755,55 +770,180 @@
     -webkit-box-orient: vertical;
   }
 
-  /* Interstitial */
-  .interstitialLeft,
-  .interstitialRight,
-  .interstitialBottom { display: none; }
+  /* Interstitial — show on mobile, scaled down */
+  .interstitialLeft  { display: flex; left: 1.5rem; }
+  .interstitialRight { display: flex; right: 1.5rem; gap: 0.9rem; }
+  .interstitialBottom { display: flex; bottom: 2rem; }
+  .interBig    { font-size: clamp(1.1rem, 5.5vw, 1.6rem); }
+  .interCount  { font-size: clamp(1.4rem, 7vw, 2.2rem); }
+  .interNumLabel { font-size: 0.52rem; }
+  .interLabel  { font-size: 0.55rem; }
 
   /* Footer */
   .footerContent {
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    padding: 3rem 1.5rem 0;
+    padding: 4rem 0 0;
+    /* subtle extra darkening only at very bottom for footer text readability */
+    background: linear-gradient(
+      to bottom,
+      transparent 55%,
+      rgba(0, 0, 0, 0.42) 100%
+    );
   }
+  .mainGrid    { display: none; }
+  .signatureWrap { display: none; }
 
-  .mainGrid {
-    flex: 0 0 auto;
+  /* Mobile hero-like layout */
+  .mobileLayout {
     display: flex;
     flex-direction: column;
+    justify-content: flex-end;
+    flex: 1;
     gap: 1rem;
-    grid-template-columns: unset;
-    overflow: visible;
-    min-height: auto;
+    padding: 0 1.5rem 5.5rem;
+  }
+  .mobileBrand {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .mobileRoleDot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+  .mobileRoleText {
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .mobileName {
+    font-size: clamp(2.8rem, 11vw, 4rem);
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: -0.04em;
+    line-height: 0.88;
+    color: #fff;
+    margin: 0;
+  }
+  .mobileNameGhost { color: rgba(255, 255, 255, 0.25); }
+  .mobileDesc {
+    font-size: 0.82rem;
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.6);
+    margin: 0;
+  }
+  .mobileCtas {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  .mobileViewBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.9rem 1.6rem;
+    border-radius: 9999px;
+    border: none;
+    cursor: pointer;
+    min-height: 52px;
+    transition: background 0.2s;
+    box-sizing: border-box;
+  }
+  .mobileViewBtn:hover { background: var(--accent-hover); }
+  .mobileTalkBtn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    width: 100%;
+    background: transparent;
+    color: var(--accent);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 0.9rem 1.6rem;
+    border-radius: 9999px;
+    border: 1.5px solid var(--accent);
+    text-decoration: none;
+    min-height: 52px;
+    transition: background 0.2s, color 0.2s;
+    box-sizing: border-box;
+  }
+  .mobileTalkBtn:hover { background: var(--accent); color: #000; }
+  .mobileSocialRow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .mobileSocialLink {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    color: rgba(255, 255, 255, 0.65);
+    padding: 0.4rem 1.5rem;
+    transition: color 0.2s;
+  }
+  .mobileSocialLink:hover { color: #fff; }
+  .mobileSocialIconEl {
+    display: flex;
+    align-items: center;
+  }
+  .mobileSocialLabelEl {
+    font-size: 0.5rem;
+    letter-spacing: 0.15em;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  .mobileSocialDivider {
+    width: 1px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.18);
+    flex-shrink: 0;
+    align-self: center;
+  }
+  .mobileScrollHint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.4rem;
+    color: rgba(255, 255, 255, 0.5);
+    padding-top: 0.2rem;
+  }
+  .mobileScrollText {
+    font-size: 0.48rem;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    text-transform: uppercase;
   }
 
-  .centerSpace { display: none; }
-
-  .leftCol,
-  .rightCol {
-    justify-content: flex-start;
-    padding: 0;
+  /* Bottom bar */
+  .bottomBar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 0.75rem 1.5rem;
   }
-
-  .identityBlock     { gap: 0.2rem; }
-  .greetLine         { font-size: 0.52rem; }
-  .roleLabel         { font-size: 0.52rem; }
-  .nameHeading       { font-size: 1.5rem; line-height: 0.9; }
-  .footerInfo        { margin-top: 0.4rem; gap: 0.4rem; }
-  .footerDescription { font-size: 0.68rem; line-height: 1.4; max-width: 100%; }
-  .footerLinks       { gap: 0; flex-wrap: wrap; }
-  .footerLink        { font-size: 0.58rem; }
-  .footerPipe        { padding: 0 0.4rem; }
-  .footerMail        { font-size: 0.7rem; }
-  .ctaEyebrow        { font-size: 0.52rem; }
-  .ctaHeading        { font-size: 1.4rem; line-height: 0.9; }
-  .talkBtn           { padding: 0.6rem 1.2rem; font-size: 0.58rem; }
-  .signatureText     { font-size: 1.8rem; }
-  .bottomBar         { padding: 0.7rem 1.5rem; }
-  .bottomRight       { display: flex; gap: 0.8rem; }
-  .builtWith         { font-size: 0.5rem; }
-  .sunIcon           { font-size: 0.9rem; }
+  .bottomRight { display: flex; gap: 0.8rem; }
+  .builtWith   { font-size: 0.52rem; }
+  .sunIcon     { font-size: 0.9rem; }
 }
 
 /* ── Tablet ───────────────────────────────────────────── */

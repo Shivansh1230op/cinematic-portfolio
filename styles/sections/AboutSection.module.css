@@ -191,6 +191,10 @@
 }
 
 @media (max-width: 767px) {
+  .content {
+    justify-content: start;
+  }
+
   .section {
     grid-template-columns: 1fr;
     grid-template-rows: 45vh 1fr;

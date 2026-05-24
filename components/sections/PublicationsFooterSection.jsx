@@ -1,13 +1,14 @@
 
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, Fragment } from 'react'
 import Image from 'next/image'
 import * as THREE from 'three'
 import { gsap } from '@/lib/gsap'
 import {
   FaGithub, FaLinkedinIn, FaMedium, FaInstagram, FaYoutube, FaEnvelope,
 } from 'react-icons/fa'
+import { FiArrowUpRight, FiChevronDown } from 'react-icons/fi'
 import profile from '@/data/profile.json'
 import styles from '@/styles/sections/PublicationsFooterSection.module.css'
 
@@ -20,6 +21,13 @@ const SOCIAL_ICONS = {
   Instagram: <FaInstagram size={13} />,
   YouTube:   <FaYoutube   size={13} />,
 }
+
+const MOBILE_SOCIAL_ICONS = {
+  GitHub:    <FaGithub    size={20} />,
+  LinkedIn:  <FaLinkedinIn  size={20} />,
+  Instagram: <FaInstagram size={20} />,
+}
+const HERO_SOCIAL_LABELS = ['GitHub', 'LinkedIn', 'Instagram']
 
 const VID_VERT = `
   varying vec2 vUv;
@@ -70,6 +78,11 @@ function easeInOut(t) {
   return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
 }
 
+function handleViewProjects() {
+  const scroller = document.querySelector('main')
+  if (scroller) gsap.to(scroller, { scrollTop: 3 * window.innerHeight, duration: 1.0, ease: 'power3.inOut' })
+}
+
 export default function PublicationsFooterSection() {
   const wrapperRef = useRef(null)
   const stickyRef  = useRef(null)
@@ -91,7 +104,6 @@ export default function PublicationsFooterSection() {
   // footer
   const canvasRef         = useRef(null)
   const videoSrcRef       = useRef(null)
-  const mobileVideoRef    = useRef(null)
   const footerContentRef  = useRef(null)
   const leftRef         = useRef(null)
   const rightRef        = useRef(null)
@@ -103,23 +115,13 @@ export default function PublicationsFooterSection() {
     const sticky        = stickyRef.current
     const canvas        = canvasRef.current
     const videoEl       = videoSrcRef.current
-    const mobileVideoEl = mobileVideoRef.current
     const scroller      = document.querySelector('main')
     if (!wrapper || !sticky || !scroller) return
 
     const isMobile = window.innerWidth < 768
 
-    let renderer, vidUni, rafId, videoPlaying = false, mobileVideoPlaying = false
+    let renderer, vidUni, rafId, videoPlaying = false
     let onMouseMove = () => {}, onResize = () => {}
-
-    // ── Mobile simple video setup ─────────────────────────────
-    if (isMobile && mobileVideoEl) {
-      mobileVideoEl.src        = '/assets/footer-video.mp4'
-      mobileVideoEl.muted      = true
-      mobileVideoEl.playsInline = true
-      mobileVideoEl.loop       = true
-      mobileVideoEl.preload    = 'none'
-    }
 
     if (!isMobile && canvas && videoEl) {
       // ── Three.js video setup ────────────────────────────────
@@ -241,40 +243,23 @@ export default function PublicationsFooterSection() {
         setImageLeft()
       }
 
-      // Desktop: 300vh wrapper → 2vh travel. Mobile: 200svh wrapper → 1vh travel.
-      const p = Math.max(0, Math.min(1, dist / (isMobile ? vh : 2 * vh)))
+      // 300vh/svh wrapper → 2 viewports of scroll travel (same for mobile + desktop)
+      const p = Math.max(0, Math.min(1, dist / (2 * vh)))
 
       // ── Phase 1: pub text fades out ──────────────────────
-      // Mobile: p 0 → 0.15 | Desktop: p 0 → 0.28
-      const pubFadeEnd = isMobile ? 0.15 : 0.28
+      // Mobile: p 0 → 0.25 | Desktop: p 0 → 0.28
+      const pubFadeEnd = isMobile ? 0.25 : 0.28
       const pubFade = 1 - Math.max(0, Math.min(1, p / pubFadeEnd))
       gsap.set(pubContentRef.current, { opacity: pubFade, pointerEvents: pubFade > 0.05 ? 'auto' : 'none' })
 
       const vw = window.innerWidth
 
       if (isMobile) {
-        // ── Mobile: image fades out (p 0.10 → 0.30) ──
-        const imgFadeOut = 1 - Math.max(0, Math.min(1, (p - 0.10) / 0.20))
-        gsap.set(imageWrapRef.current, { width: vw, x: 0, opacity: imgFadeOut })
+        // footer-mobile.png static background — interstitial fades between pub and footer
+        const interIn  = Math.max(0, Math.min(1, (p - 0.28) / 0.17))
+        const interOut = Math.max(0, Math.min(1, (p - 0.60) / 0.12))
+        gsap.set(interstitialRef.current, { opacity: interIn * (1 - interOut), pointerEvents: 'none' })
 
-        // Overlay matches image fade
-        if (imageOverlayRef.current) {
-          gsap.set(imageOverlayRef.current, { opacity: imgFadeOut })
-        }
-
-        // ── Mobile video: fade in with footer p 0.20 → 0.45 ─
-        if (mobileVideoEl) {
-          const mVidFade = Math.max(0, Math.min(1, (p - 0.20) / 0.25))
-          gsap.set(mobileVideoEl, { opacity: mVidFade * 0.85 })
-          if (mVidFade > 0.04 && !mobileVideoPlaying) {
-            mobileVideoPlaying = true
-            mobileVideoEl.play().catch(() => {})
-          } else if (mVidFade <= 0.04 && mobileVideoPlaying) {
-            mobileVideoPlaying = false
-            mobileVideoEl.pause()
-            mobileVideoEl.currentTime = 0
-          }
-        }
       } else {
         // ── Phase 2: image shrinks full-width → centered (p 0.15 → 0.72) ──
         const imgRaw = Math.max(0, Math.min(1, (p - 0.15) / 0.57))
@@ -313,8 +298,8 @@ export default function PublicationsFooterSection() {
       }
 
       // ── Footer text fades in ──────────────────────────────
-      // Mobile: p 0.05 → 0.25 | Desktop: p 0.75 → 1.0
-      const footerStart = isMobile ? 0.05 : 0.75
+      // Mobile: p 0.72 → 0.92 | Desktop: p 0.75 → 1.0
+      const footerStart = isMobile ? 0.72 : 0.75
       const footerRange = isMobile ? 0.20 : 0.25
       const footerFade = Math.max(0, Math.min(1, (p - footerStart) / footerRange))
       gsap.set(footerContentRef.current, { opacity: footerFade, pointerEvents: footerFade > 0.05 ? 'auto' : 'none' })
@@ -344,8 +329,20 @@ export default function PublicationsFooterSection() {
         <canvas ref={canvasRef} className={styles.glCanvas} />
         <video ref={videoSrcRef} className={styles.hiddenVideo} />
 
-        {/* ── Mobile video (footer background — mobile only) ── */}
-        <video ref={mobileVideoRef} className={styles.mobileVideo} playsInline muted loop />
+        {/* ── Mobile background image (footer phase — mobile only) ── */}
+        <div className={styles.mobileFooterBg}>
+          <Image
+            src="/assets/footer-mobile.png"
+            alt=""
+            fill
+            className={styles.mobileFooterBgImg}
+            sizes="100vw"
+            priority={false}
+          />
+        </div>
+
+        {/* ── Mobile permanent dark overlay — keeps image visually identical across all 3 sections ── */}
+        <div className={styles.mobileDarkOverlay} aria-hidden />
 
         {/* ── Floating image: starts left, moves to center ── */}
         <div ref={imageWrapRef} className={styles.imageWrap}>
@@ -441,6 +438,49 @@ export default function PublicationsFooterSection() {
 
         {/* ── Footer content ── */}
         <div ref={footerContentRef} className={styles.footerContent}>
+
+          {/* ── Mobile: hero-like layout ── */}
+          <div className={styles.mobileLayout}>
+            <div className={styles.mobileBrand}>
+              <span className={styles.mobileRoleDot} />
+              <span className={styles.mobileRoleText}>{profile.roles.short.toUpperCase()}</span>
+            </div>
+            <h2 className={styles.mobileName}>
+              {profile.name.first.toUpperCase()}
+              <br />
+              <span className={styles.mobileNameGhost}>{profile.name.last.toUpperCase()}</span>
+            </h2>
+            <p className={styles.mobileDesc}>
+              Building cinematic digital experiences,
+              scalable systems, and AI&#8209;powered products
+              with modern web technologies.
+            </p>
+            <div className={styles.mobileCtas}>
+              <a href={`mailto:${profile.email}`} className={styles.mobileTalkBtn}>
+                Let&apos;s talk <FiArrowUpRight />
+              </a>
+            </div>
+            <div className={styles.mobileSocialRow}>
+              {HERO_SOCIAL_LABELS.map((label, i) => {
+                const s = profile.socials.find(s => s.label === label)
+                if (!s) return null
+                return (
+                  <Fragment key={label}>
+                    {i > 0 && <div className={styles.mobileSocialDivider} aria-hidden />}
+                    <a href={s.href} target="_blank" rel="noopener noreferrer" className={styles.mobileSocialLink} aria-label={label}>
+                      <span className={styles.mobileSocialIconEl}>{MOBILE_SOCIAL_ICONS[label]}</span>
+                      <span className={styles.mobileSocialLabelEl}>{label.toUpperCase()}</span>
+                    </a>
+                  </Fragment>
+                )
+              })}
+            </div>
+            <div className={styles.mobileScrollHint} aria-hidden>
+              <FiChevronDown size={18} />
+              <span className={styles.mobileScrollText}>Scroll to explore</span>
+            </div>
+          </div>
+
           <div className={styles.mainGrid}>
 
             <div ref={leftRef} className={styles.leftCol}>
