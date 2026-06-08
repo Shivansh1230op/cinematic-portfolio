@@ -3,7 +3,7 @@ import { ImageResponse } from 'next/og'
 
 export const runtime = 'edge'
 
-export const alt = 'Vaibhav Khushalani | Full Stack Developer'
+export const alt = 'Shivansh Mishra | Full Stack Developer'
 
 export const size = {
   width: 1200,
@@ -70,7 +70,6 @@ export default function Image() {
                 marginRight: 12,
               }}
             />
-
             <span
               style={{
                 color: ACCENT,
@@ -100,9 +99,8 @@ export default function Image() {
                 letterSpacing: -4,
               }}
             >
-              VAIBHAV
+              SHIVANSH
             </span>
-
             <span
               style={{
                 fontSize: 92,
@@ -111,7 +109,7 @@ export default function Image() {
                 letterSpacing: -4,
               }}
             >
-              KHUSHALANI
+              MISHRA
             </span>
           </div>
 
@@ -125,8 +123,7 @@ export default function Image() {
               marginBottom: 34,
             }}
           >
-            Building cinematic digital experiences with modern web
-            technologies & AI.
+            Building modern web experiences with clean code and curiosity.
           </div>
 
           {/* TAGS */}
@@ -138,12 +135,7 @@ export default function Image() {
               flexWrap: 'wrap',
             }}
           >
-            {[
-              'AI Architect',
-              'Full Stack',
-              'Next.js',
-              'MERN Stack',
-            ].map((tag) => (
+            {['Full Stack', 'React.js', 'Node.js', 'AI & ML'].map((tag) => (
               <div
                 key={tag}
                 style={{
@@ -162,44 +154,15 @@ export default function Image() {
           </div>
 
           {/* STATS */}
-          <div
-            style={{
-              display: 'flex',
-              gap: 32,
-            }}
-          >
+          <div style={{ display: 'flex', gap: 32 }}>
             {[
-              ['4+', 'Years'],
-              ['20+', 'Projects'],
-              ['AI + FS', 'Specialist'],
+              ['Fresh', 'Graduate'],
+              ['10+', 'Projects'],
+              ['BCA', 'AI & ML'],
             ].map(([value, label]) => (
-              <div
-                key={label}
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: 34,
-                    fontWeight: 900,
-                    color: 'white',
-                  }}
-                >
-                  {value}
-                </span>
-
-                <span
-                  style={{
-                    fontSize: 14,
-                    color: '#7a7a7a',
-                    textTransform: 'uppercase',
-                    letterSpacing: 1,
-                  }}
-                >
-                  {label}
-                </span>
+              <div key={label} style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: 34, fontWeight: 900, color: 'white' }}>{value}</span>
+                <span style={{ fontSize: 14, color: '#7a7a7a', textTransform: 'uppercase', letterSpacing: 1 }}>{label}</span>
               </div>
             ))}
           </div>
@@ -217,24 +180,18 @@ export default function Image() {
             position: 'relative',
           }}
         >
-          {/* IMAGE */}
           <img
             src={photoUrl}
             width={420}
             height={630}
-            alt="Vaibhav Khushalani"
-            style={{
-              objectFit: 'cover',
-            }}
+            alt="Shivansh Mishra"
+            style={{ objectFit: 'cover' }}
           />
-
-          {/* OVERLAY */}
           <div
             style={{
               position: 'absolute',
               inset: 0,
-              background:
-                'linear-gradient(to left, transparent, rgba(5,5,5,0.9))',
+              background: 'linear-gradient(to left, transparent, rgba(5,5,5,0.9))',
             }}
           />
         </div>
@@ -250,7 +207,7 @@ export default function Image() {
             letterSpacing: 2,
           }}
         >
-          vaibhav-create.vercel.app
+          shivansh-mishra.netlify.app
         </div>
       </div>
     ),
