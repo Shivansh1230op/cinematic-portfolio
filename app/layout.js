@@ -29,47 +29,46 @@ const dancing = Dancing_Script({
 export const metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: 'Vaibhav Khushalani | Full Stack Developer',
-    template: '%s | Vaibhav Khushalani',
+    default: 'Shivansh Mishra | Full Stack Developer',
+    template: '%s | Shivansh Mishra',
   },
   description:
-    'Full Stack Engineer with 4+ years building scalable web and AI-powered systems using MERN, Next.js, and Python. Available worldwide for collaborations.',
+    'Fresher Full-Stack Developer and AI enthusiast pursuing BCA with specialization in AI & ML. Building modern web applications with React, Node.js, and MongoDB.',
   keywords: [
-    'Vaibhav Khushalani',
+    'Shivansh Mishra',
     'Full Stack Developer',
-    'Software Engineer',
-    'MERN Stack',
-    'Next.js Developer',
+    'Software Developer',
     'React Developer',
     'Node.js',
-    'AI Systems',
+    'AI ML',
+    'BCA',
     'Portfolio',
     'India',
   ],
-  authors: [{ name: 'Vaibhav Khushalani', url: SITE_URL }],
-  creator: 'Vaibhav Khushalani',
+  authors: [{ name: 'Shivansh Mishra', url: SITE_URL }],
+  creator: 'Shivansh Mishra',
   openGraph: {
     type: 'website',
     locale: 'en_IN',
     url: SITE_URL,
-    siteName: 'Vaibhav Khushalani',
-    title: 'Vaibhav Khushalani | Full Stack Developer',
+    siteName: 'Shivansh Mishra',
+    title: 'Shivansh Mishra | Full Stack Developer',
     description:
-      'Full Stack Engineer with 4+ years building scalable web and AI-powered systems using MERN, Next.js, and Python. Available worldwide for collaborations.',
+      'Fresher Full-Stack Developer and AI enthusiast pursuing BCA with specialization in AI & ML. Building modern web applications with React, Node.js, and MongoDB.',
     images: [
       {
         url: '/opengraph-image',
         width: 1200,
         height: 630,
-        alt: 'Vaibhav Khushalani | Full Stack Developer Portfolio',
+        alt: 'Shivansh Mishra | Full Stack Developer Portfolio',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Vaibhav Khushalani | Full Stack Developer',
+    title: 'Shivansh Mishra | Full Stack Developer',
     description:
-      'Full Stack Engineer with 4+ years building scalable web and AI-powered systems using MERN, Next.js, and Python. Available worldwide for collaborations.',
+      'Fresher Full-Stack Developer and AI enthusiast pursuing BCA with specialization in AI & ML. Building modern web applications with React, Node.js, and MongoDB.',
     images: ['/opengraph-image'],
   },
   robots: {
@@ -117,16 +116,13 @@ export default function RootLayout({ children }) {
             __html: JSON.stringify({
               '@context': 'https://schema.org',
               '@type': 'Person',
-              name: 'Vaibhav Khushalani',
+              name: 'Shivansh Mishra',
               url: SITE_URL,
-              email: 'vaibhavkhush124@gmail.com',
+              email: 'mishrashivansh500@gmail.com',
               jobTitle: 'Full Stack Developer',
               sameAs: [
-                'https://github.com/VaibhavKhushalani',
-                'https://www.linkedin.com/in/vaibhav-khushalani-760217136',
-                'https://medium.com/@vaibhavkhushalani',
-                'https://www.instagram.com/vaibhav.create',
-                'https://www.youtube.com/@vaibhav.create',
+                'https://github.com/Shivansh1230op',
+                'https://www.linkedin.com/in/shivansh-mishra-aa302924a',
               ],
             }),
           }}

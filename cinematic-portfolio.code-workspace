@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "cinematic-portfolio",
+			"path": "."
+		},
+		{
+			"name": "portfolio2",
+			"path": ".."
+		}
+	],
+	"settings": {}
+}

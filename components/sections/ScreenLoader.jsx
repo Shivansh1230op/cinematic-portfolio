@@ -4,6 +4,8 @@ import { useRef } from 'react'
 import { gsap } from '@/lib/gsap'
 import styles from '@/styles/sections/ScreenLoader.module.css'
 
+import profile from '@/data/profile.json'
+
 export default function ScreenLoader({ onDismiss }) {
   const overlayRef = useRef(null)
 
@@ -94,7 +96,7 @@ export default function ScreenLoader({ onDismiss }) {
       <div className={styles.liquidBg} aria-hidden />
 
       <p className={styles.monogram}>
-        VAIBHAV KHUSHALANI
+        {profile.name.full.toUpperCase()}
       </p>
 
       <button

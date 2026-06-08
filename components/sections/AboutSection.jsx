@@ -7,12 +7,7 @@ import { FaGithub, FaLinkedinIn, FaMedium, FaInstagram, FaYoutube } from 'react-
 import profile from '@/data/profile.json'
 import styles from '@/styles/sections/AboutSection.module.css'
 
-const BIO      = profile.bio
-const WHO_ITEMS = profile.skills
-
 const ICON_MAP = { GitHub: FaGithub, LinkedIn: FaLinkedinIn, Medium: FaMedium, Instagram: FaInstagram, YouTube: FaYoutube }
-
-const SOCIALS = profile.socials.map(s => ({ Icon: ICON_MAP[s.label], href: s.href, label: s.label }))
 
 export default function AboutSection() {
   const sectionRef  = useRef(null)
@@ -20,6 +15,10 @@ export default function AboutSection() {
   const contentRef  = useRef(null)
   const socialsRef  = useRef(null)
   const intervalRef = useRef(null)
+
+  const BIO       = profile.bio
+  const WHO_ITEMS = profile.skills
+  const SOCIALS   = profile.socials.map(s => ({ Icon: ICON_MAP[s.label], href: s.href, label: s.label }))
 
   const [typed, setTyped] = useState(0)
   const [done,  setDone]  = useState(false)
@@ -88,7 +87,7 @@ export default function AboutSection() {
           <div className={styles.photoFrame} data-about-photo>
             <Image
               src="/assets/about.webp"
-              alt="Vaibhav Khushalani"
+              alt={profile.name.full}
               fill
               quality={100}
               sizes="(min-width: 768px) 30vw, 100vw"
