@@ -2,7 +2,7 @@
 
 A high-performance personal portfolio built with Next.js 16, GSAP, Three.js, and CSS Modules.
 
-**Live:** [shivansh-mishra.netlify.app](https://shivansh-mishra.netlify.app) &nbsp;|&nbsp; **GitHub:** [Shivansh1230op/cinematic-portfolio](https://github.com/Shivansh1230op/cinematic-portfolio)
+**Live:** [shivanshmishraportfolio.netlify.app](https://shivanshmishraportfolio.netlify.app) &nbsp;|&nbsp; **GitHub:** [Shivansh1230op/cinematic-portfolio](https://github.com/Shivansh1230op/cinematic-portfolio)
 
 ## Stack
 

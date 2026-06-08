@@ -207,7 +207,7 @@ export default function Image() {
             letterSpacing: 2,
           }}
         >
-          shivansh-mishra.netlify.app
+          shivanshmishraportfolio.netlify.app
         </div>
       </div>
     ),
