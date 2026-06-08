@@ -331,16 +331,15 @@ export default function PublicationsFooterSection() {
         <canvas ref={canvasRef} className={styles.glCanvas} />
         <video ref={videoSrcRef} className={styles.hiddenVideo} />
 
-        {/* ── Mobile background image (footer phase - mobile only) ── */}
+        {/* ── Mobile background video (footer phase - mobile only) ── */}
         <div className={styles.mobileFooterBg}>
-          <Image
-            src="/assets/footer-mobile.webp"
-            alt=""
-            fill
-            quality={100}
+          <video
             className={styles.mobileFooterBgImg}
-            sizes="100vw"
-            priority={false}
+            src="/assets/footer-video.mp4"
+            autoPlay
+            muted
+            playsInline
+            loop
           />
         </div>
 
