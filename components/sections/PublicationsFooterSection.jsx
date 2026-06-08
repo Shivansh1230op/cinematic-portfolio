@@ -551,7 +551,7 @@ export default function PublicationsFooterSection() {
           <div ref={bottomBarRef} className={styles.bottomBar}>
             <div className={styles.bottomLeft}>
               <div className={styles.monogram}>
-                <span className={styles.monoLetters}>VK</span>
+                <span className={styles.monoLetters}>SM</span>
                 <span className={styles.monoDot} />
               </div>
               <span className={styles.leftDivider} />
